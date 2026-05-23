@@ -1596,22 +1596,11 @@
                         quickReplies: [`${product.name}价格`, `${product.name}效果怎么样`, '如何预约']
                     };
                 }
-                // 询问多久见效/变化
-                if ((lowerMsg.includes('多久') || lowerMsg.includes('变化') || lowerMsg.includes('见效') || lowerMsg.includes('周期') || lowerMsg.includes('几次') || lowerMsg.includes('什么时候')) && 
-                    !lowerMsg.includes('维持') && !lowerMsg.includes('保持') && !lowerMsg.includes('持续')) {
-                    if (product.name === '净颜靓白') {
-                        return {
-                            text: `宝，美白点滴<strong>打完两次</strong>就会开始有一些变化了，用手机拍摄打之前和打之后的原相机图片就可以看出来哦~📸<br><br>想要效果明显的话，需要一个疗程：<br>🗓️ <strong>28天</strong>（一周打一次，共4-5次）<br><br>28天是身体细胞代谢的一个完整周期，按疗程打完效果是最好的~`,
-                            quickReplies: ['美白能维持多久', '净颜靓白价格', '安全吗', '如何预约']
-                        };
-                    }
-                    return {
-                        text: `宝，${product.name}一般按疗程打效果最好哦~<br><br>具体见效时间因人而异，建议按疗程来打，院长会根据您的体检数据来调整方案呢<br><br>预约可以加微信：<strong>Njszzr001</strong>`,
-                        quickReplies: [`${product.name}价格`, '安全吗', '如何预约']
-                    };
-                }
-                // 询问能维持多久
-                if (lowerMsg.includes('维持') || lowerMsg.includes('保持') || lowerMsg.includes('持续') || (lowerMsg.includes('多久') && lowerMsg.includes('效'))) {
+                // 询问能维持多久（优先检查，避免被"多久见效"抢先）
+                if (lowerMsg.includes('维持') || lowerMsg.includes('保持') || lowerMsg.includes('持续') || 
+                    lowerMsg.includes('能白多久') || lowerMsg.includes('白多久') || 
+                    (lowerMsg.includes('多久') && lowerMsg.includes('效')) ||
+                    (lowerMsg.includes('多久') && (lowerMsg.includes('维持') || lowerMsg.includes('保持') || lowerMsg.includes('持续')))) {
                     if (product.name === '净颜靓白') {
                         return {
                             text: `宝，美白点滴打完一个疗程好好维护的话，<strong>可以维持近一年</strong>呢~ ✨<br><br>当然也要看个人体质和生活习惯：<br>☀️ 注意防晒，紫外线会加速色素沉积<br>💧 多喝水，帮助身体代谢<br>🥗 少吃辛辣油腻，清淡饮食<br>😴 保持规律作息<br><br>做好这些维护，美白效果可以保持很久的哦~`,
@@ -1620,6 +1609,19 @@
                     }
                     return {
                         text: `宝，${product.name}按疗程打完效果可以维持比较久的~<br><br>具体维持时间因人而异，建议做好日常维护，院长会根据您的体检数据给出个性化建议呢<br><br>预约可以加微信：<strong>Njszzr001</strong>`,
+                        quickReplies: [`${product.name}价格`, '安全吗', '如何预约']
+                    };
+                }
+                // 询问多久见效/变化
+                if (lowerMsg.includes('多久') || lowerMsg.includes('变化') || lowerMsg.includes('见效') || lowerMsg.includes('周期') || lowerMsg.includes('几次') || lowerMsg.includes('什么时候')) {
+                    if (product.name === '净颜靓白') {
+                        return {
+                            text: `宝，美白点滴<strong>打完两次</strong>就会开始有一些变化了，用手机拍摄打之前和打之后的原相机图片就可以看出来哦~📸<br><br>想要效果明显的话，需要一个疗程：<br>🗓️ <strong>28天</strong>（一周打一次，共4-5次）<br><br>28天是身体细胞代谢的一个完整周期，按疗程打完效果是最好的~`,
+                            quickReplies: ['美白能维持多久', '净颜靓白价格', '安全吗', '如何预约']
+                        };
+                    }
+                    return {
+                        text: `宝，${product.name}一般按疗程打效果最好哦~<br><br>具体见效时间因人而异，建议按疗程来打，院长会根据您的体检数据来调整方案呢<br><br>预约可以加微信：<strong>Njszzr001</strong>`,
                         quickReplies: [`${product.name}价格`, '安全吗', '如何预约']
                     };
                 }
@@ -1640,6 +1642,14 @@
                 return {
                     text: `在的宝，<strong>${product.name}</strong>（${product.series}）为您介绍如下：${buildProductInfo(product)}<br><br>💡 所有点滴都是院长亲自配的，根据您的体检检测报告去做复配的方案哦~`,
                     quickReplies: ['安全吗', '如何预约', '查看其他项目']
+                };
+            }
+
+            // 全局"能白多久"检测（不依赖产品匹配，默认理解为"维持多久"）
+            if (lowerMsg.includes('能白多久') || lowerMsg.includes('白多久') || lowerMsg.includes('美白能维持') || lowerMsg.includes('美白维持')) {
+                return {
+                    text: `宝，美白点滴打完一个疗程好好维护的话，<strong>可以维持近一年</strong>呢~ ✨<br><br>当然也要看个人体质和生活习惯：<br>☀️ 注意防晒，紫外线会加速色素沉积<br>💧 多喝水，帮助身体代谢<br>🥗 少吃辛辣油腻，清淡饮食<br>😴 保持规律作息<br><br>做好这些维护，美白效果可以保持很久的哦~`,
+                    quickReplies: ['美白多久见效', '净颜靓白价格', '安全吗', '如何预约']
                 };
             }
 
