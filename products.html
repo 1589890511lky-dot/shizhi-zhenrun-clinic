@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时秩臻润 - 产品中心</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #C4A77D;
+            --primary-light: #E8DCC8;
+            --primary-dark: #A68B5B;
+            --bg-warm: #FAF8F5;
+            --bg-cream: #F5F0E8;
+            --text-dark: #3D3D3D;
+            --text-medium: #6B6B6B;
+            --text-light: #999999;
+            --white: #FFFFFF;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.1);
+            --radius: 16px;
+            --radius-lg: 24px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, var(--bg-warm) 0%, var(--bg-cream) 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+        }
+
+        /* 导航栏 */
+        .navbar {
+            background: var(--white);
+            padding: 15px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 4px;
+            color: var(--text-dark);
+        }
+
+        .nav-logo span {
+            font-weight: 500;
+            color: var(--primary-dark);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-link {
+            color: var(--text-medium);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link.active {
+            color: var(--primary-dark);
+            font-weight: 500;
+        }
+
+        /* 头部区域 */
+        .header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            background: linear-gradient(180deg, rgba(196, 167, 125, 0.08) 0%, transparent 100%);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+
+        .header h1 span {
+            font-weight: 500;
+            color: var(--primary-dark);
+        }
+
+        .header p {
+            color: var(--text-medium);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .tagline {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            color: var(--primary-dark);
+            font-size: 0.9rem;
+        }
+
+        .tagline::before,
+        .tagline::after {
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary));
+        }
+
+        .tagline::after {
+            background: linear-gradient(90deg, var(--primary), transparent);
+        }
+
+        /* 产品手册展示 */
+        .brochure-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .brochure-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .brochure-title h2 {
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .brochure-title p {
+            color: var(--text-medium);
+        }
+
+        .brochure-image {
+            width: 100%;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-hover);
+            margin-bottom: 30px;
+            transition: transform 0.3s;
+        }
+
+        .brochure-image:hover {
+            transform: scale(1.01);
+        }
+
+        /* 产品系列介绍 */
+        .series-section {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            font-weight: 400;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            color: var(--text-medium);
+            font-size: 1rem;
+        }
+
+        /* 系列卡片 */
+        .series-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .series-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 35px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            border: 1px solid rgba(196, 167, 125, 0.1);
+        }
+
+        .series-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            border-color: rgba(196, 167, 125, 0.3);
+        }
+
+        .series-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .series-number {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .series-info h3 {
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+
+        .series-info .en-name {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .series-desc {
+            color: var(--text-medium);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .product-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .product-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background: var(--bg-warm);
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .product-item:hover {
+            background: rgba(196, 167, 125, 0.1);
+        }
+
+        .product-name {
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .product-price {
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+
+        /* 页脚 */
+        .footer {
+            background: var(--white);
+            padding: 40px 20px;
+            margin-top: 80px;
+            border-top: 1px solid rgba(196, 167, 125, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 4px;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+
+        .footer-logo span {
+            font-weight: 500;
+            color: var(--primary-dark);
+        }
+
+        .footer-contact {
+            color: var(--text-medium);
+            margin-bottom: 20px;
+        }
+
+        .footer-contact strong {
+            color: var(--primary-dark);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .footer-link {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-link:hover {
+            color: var(--primary);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .series-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .series-card {
+                padding: 25px;
+            }
+        }
+
+        /* 图片放大模态框 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal img {
+            max-width: 95%;
+            max-height: 95%;
+            object-fit: contain;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">时秩<span>臻润</span></div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">
+                    <i class="fas fa-home"></i> 首页
+                </a>
+                <a href="products.html" class="nav-link active">
+                    <i class="fas fa-spa"></i> 产品中心
+                </a>
+                <a href="index.html#booking" class="nav-link">
+                    <i class="fas fa-calendar-check"></i> 在线预约
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 头部 -->
+    <header class="header">
+        <h1>时秩<span>臻润</span> 产品中心</h1>
+        <p>九大系列，全方位呵护您的健康与美丽<br>每一滴，都是生命的黄金时光</p>
+        <div class="tagline">尊享定制 · 焕活新生</div>
+    </header>
+
+    <!-- 产品手册展示 -->
+    <section class="brochure-section">
+        <div class="brochure-title">
+            <h2><i class="fas fa-book-open" style="color: var(--primary);"></i> 产品手册</h2>
+            <p>点击查看大图，了解每个产品的详细信息</p>
+        </div>
+        
+        <img src="products_01.png" alt="时秩臻润产品手册 第1页" class="brochure-image" onclick="openModal(this.src)">
+        <img src="products_02.png" alt="时秩臻润产品手册 第2页" class="brochure-image" onclick="openModal(this.src)">
+    </section>
+
+    <!-- 产品系列介绍 -->
+    <section class="series-section">
+        <div class="section-title">
+            <h2>九大系列 · 全方位呵护</h2>
+            <p>针对不同需求，提供专业化、个性化的健康解决方案</p>
+        </div>
+
+        <div class="series-grid">
+            <!-- 01 焕龄NIX+系列 -->
+            <div class="series-card">
+                <div class="series-header">
+                    <div class="series-number">01</div>
+                    <div class="series-info">
+                        <h3>焕龄NIX+系列</h3>
+                        <div class="en-name">NIX+ Rejuvenation</div>
+                    </div>
+                </div>
+                <p class="series-desc">
+                    基于内源性抗衰核心机制，靶向调控细胞能量水平。精准适配25-55岁抗衰需求人群，焕启细胞级抗衰新纪元。
+                </p>
+                <div class="product-list">
+                    <div class="product-item">
+                        <span class="product-name">NIX+ 50mg</span>
+                        <span class="product-price">¥2,980</span>
+                    </div>
+                    <div class="product-item">
+                        <span class="product-name">NIX+ 100mg</span>
+                        <span class="product-price">¥4,980</span>
+                    </div>
+                    <div class="product-item">
+                        <span class="product-name">NIX+ 200mg</span>
+                        <span class="product-price">¥7,980</span>
+                    </div>
+                    <div class="product-item">
+                        <span class="product-name">NIX+ 300mg</span>
+                        <span class="product-price">¥9,980</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 02 黄金时代系列 -->
+            <div class="series-card">
+                <div class="series-header">
+                    <div class="series-number">02</div>
+                    <div class="series-info">
+                        <h3>黄金时代系列</h3>
+                        <div class="en-name">The Golden Age</div>
+                    </div>
+                </div>
+                <p class="series-desc">
+                    全维度疗程规划与体态优化，靶向美白提亮，打造幼态肌肤，靶向修复抗衰，实现肌肤逆龄。
+                </p>
+                <div class="product-list">
+                    <div class="product-item">
+                        <span class="product-name">速愈needle</span>
+                        <span class="product-price">¥980起</span>
+                    </div>
+                    <div class="product-item">
+                        <span class="product-name">抗衰needle</span>
+                        <span class="product-price">¥3,800起</span>
+                    </div>
+                    <div class="product-item">
+                        <span class="product-name">回春needle</span>
+                        <span class="product-price">¥4,800起</span>
+                    </div>
+                    <div class="product-item">
+                        <span class="product-name">六维闪白</span>
+                        <span class="product-price">¥3,980起</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 03 明星肽系列 -->
+            <div class="series-card">
+                <div class="series-header">
+                    <div class="series-number">03</div>
+                    <div class="series-info">
+                        <h3>明星肽系列</h3>
+                        <div class="en-name">Star Peptide</div>
+                    </div>
+                </div>
+                <p class="series-desc">
+                    基于肽类焕活与肠道菌群稳态调控，精准改善肤色暗沉，全面代谢焕活，实现美白、焕颜、回春。
+                </p>
+                <div class="product-list">
+                    <div class="product-item">
+                        <span class="product-name">极客护肝</span>
+                        <span class="product-price">¥3,800起</span>
+                    </div>
+                    <div class="product-item">
+                        <span class="product-name">极客减重</span>
+                        <span class="product-price">¥3,800起</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 04 代谢焕活系列 -->
+            <div class="series-card">
+                <div class="series-header">
+                    <div class="series-number">04</div>
+                    <div class="series-info">
+                        <h3>代谢焕活系列</h3>
+                        <div class="en-name">Metabolic Revitalization</div>
+                    </div>
+                </div>
+                <p class="series-desc">
+                    聚焦代谢障碍与机体生态平衡，靶向干预脂代谢导致的机能损耗，内调血糖稳态，靶向优化肠道菌群。
+                </p>
+                <div class="product-list">
+                    <div class="product-item">
+                        <span class="product-name">大蒜needle</span>
+                        <span class="product-price">¥698起</span>
+                    </div>
+                    <div class="product-item">
+                        <span class="product-name">能量needle</span>
+                        <span class="product-price">¥980起</span>
+                    </div>
+                    <div class="product-item">
+                        <span class="product-name">稳糖needle</span>
+                        <span class="product-price">¥980起</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 05 生命活力系列 -->
+            <div class="series-card">
+                <div class="series-header">
+                    <div class="series-number">05</div>
+                    <div class="series-info">
+                        <h3>生命活力系列</h3>
+                        <div class="en-name">Life Vitality</div>
+                    </div>
+                </div>
+                <p class="series-desc">
+                    依托代谢调控与自体修复技术，改善关节隐痛僵硬、骨密度低下、术后修复等问题，优化骨骼与关节双重动力。
+                </p>
+                <div class="product-list">
+                    <div class="product-item">
+                        <span class="product-name">安睡无忧</span>
+                        <span class="product-price">¥980起</span>
+                    </div>
+                    <div class="product-item">
+                        <span class="product-name">气血needle</span>
+                        <span class="product-price">¥980起</span>
+                    </div>
+                    <div class="product-item">
+                        <span class="product-name">心脉通畅</span>
+                        <span class="product-price">¥980起</span>
+                    </div>
+                    <div class="product-item">
+                        <span class="product-name">脑力needle</span>
+                        <span class="product-price">¥2,980起</span>
+                    </div>
+                    <div class="product-item">
+                        <span class="product-name">骨力新生</span>
+                        <span class="product-price">¥2,980起</span>
+                    </div>
+                    <div class="product-item">
+                        <span class="product-name">甲稳needle</span>
+                        <span class="product-price">¥2,980起</span>
+                    </div>
+                    <div class="product-item">
+                        <span class="product-name">斗志昂扬</span>
+                        <span class="product-price">¥3,980起</span>
+                    </div>
+                    <div class="product-item">
+                        <span class="product-name">春潮私护</span>
+                        <span class="product-price">¥3,980起</span>
+                    </div>
+                    <div class="product-item">
+                        <span class="product-name">荷尔蒙之春</span>
+                        <span class="product-price">¥3,980起</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 06 免疫守护系列 -->
+            <div class="series-card">
+                <div class="series-header">
+                    <div class="series-number">06</div>
+                    <div class="series-info">
+                        <h3>免疫守护系列</h3>
+                        <div class="en-name">Immune Defense</div>
+                    </div>
+                </div>
+                <p class="series-desc">
+                    聚焦免疫潜能保护与个体代谢稳态机制，针对频繁熬夜、酒后头痛及心肝肾功能较弱者，改善代谢损伤。
+                </p>
+                <div class="product-list">
+                    <div class="product-item">
+                        <span class="product-name">免疫needle</span>
+                        <span class="product-price">¥980起</span>
+                    </div>
+                    <div class="product-item">
+                        <span class="product-name">抗炎鸡尾酒</span>
+                        <span class="product-price">¥9,800起</span>
+                    </div>
+                    <div class="product-item">
+                        <span class="product-name">抗敏鸡尾酒</span>
+                        <span class="product-price">¥9,800起</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 07 细胞能量系列 -->
+            <div class="series-card">
+                <div class="series-header">
+                    <div class="series-number">07</div>
+                    <div class="series-info">
+                        <h3>细胞能量系列</h3>
+                        <div class="en-name">Cellular Energy</div>
+                    </div>
+                </div>
+                <p class="series-desc">
+                    优化皮肤状态与色素代谢通路，改善暗沉无光、色素沉着、干燥粗糙，实现由内而外的健康光泽。
+                </p>
+                <div class="product-list">
+                    <div class="product-item">
+                        <span class="product-name">雾化</span>
+                        <span class="product-price">¥2,980起</span>
+                    </div>
+                    <div class="product-item">
+                        <span class="product-name">鼻喷</span>
+                        <span class="product-price">¥2,980起</span>
+                    </div>
+                    <div class="product-item">
+                        <span class="product-name">静脉</span>
+                        <span class="product-price">¥12,800起</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 08 肠道菌群系列 -->
+            <div class="series-card">
+                <div class="series-header">
+                    <div class="series-number">08</div>
+                    <div class="series-info">
+                        <h3>肠道菌群系列</h3>
+                        <div class="en-name">Gut Microbiota</div>
+                    </div>
+                </div>
+                <p class="series-desc">
+                    基于肠道微生态平衡，改善黏膜受损、胃溃疡、慢性胃炎、十二指肠溃疡及肠道功能问题。
+                </p>
+                <div class="product-list">
+                    <div class="product-item">
+                        <span class="product-name">单项补剂</span>
+                        <span class="product-price">¥6,800</span>
+                    </div>
+                    <div class="product-item">
+                        <span class="product-name">定制补剂</span>
+                        <span class="product-price">¥19,800</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 09 繁花绽放系列 -->
+            <div class="series-card">
+                <div class="series-header">
+                    <div class="series-number">09</div>
+                    <div class="series-info">
+                        <h3>繁花绽放系列</h3>
+                        <div class="en-name">Blossom Bloom</div>
+                    </div>
+                </div>
+                <p class="series-desc">
+                    高端定制Portfolio，全方位奢华养护体验。依托性激素调节与生殖机能优化，改善性欲减退、性功能下降等问题。
+                </p>
+                <div class="product-list">
+                    <div class="product-item">
+                        <span class="product-name">深海Portfolio</span>
+                        <span class="product-price">¥98,000</span>
+                    </div>
+                    <div class="product-item">
+                        <span class="product-name">维秘Portfolio</span>
+                        <span class="product-price">¥98,000</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">时秩<span>臻润</span></div>
+            <p class="footer-contact">
+                预约微信：<strong>Njszzr001</strong><br>
+                南京市建邺区 · 专科点滴诊所
+            </p>
+            <div class="footer-links">
+                <a href="index.html" class="footer-link">智能客服</a>
+                <a href="products.html" class="footer-link">产品中心</a>
+                <a href="index.html#booking" class="footer-link">在线预约</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 图片放大模态框 -->
+    <div class="modal" id="imageModal" onclick="closeModal()">
+        <span class="modal-close">&times;</span>
+        <img id="modalImage" src="" alt="放大图片">
+    </div>
+
+    <script>
+        function openModal(src) {
+            document.getElementById('modalImage').src = src;
+            document.getElementById('imageModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // ESC键关闭模态框
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
