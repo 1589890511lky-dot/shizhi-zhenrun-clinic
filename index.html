@@ -1645,9 +1645,17 @@
                 };
             }
 
+            // 全局"多久变白"检测（理解为"美白多久见效"）
+            if (lowerMsg.includes('变白') || lowerMsg.includes('多久白') || (lowerMsg.includes('白') && lowerMsg.includes('多久') && !lowerMsg.includes('维持') && !lowerMsg.includes('保持'))) {
+                return {
+                    text: `宝，美白点滴<strong>打完两次</strong>就会开始有一些变化了，用手机拍摄打之前和打之后的原相机图片就可以看出来哦~📸<br><br>效果明显需要一个疗程（<strong>28天</strong>）：28天是身体细胞代谢的一个周期，按疗程打完效果是最好的~`,
+                    quickReplies: ['美白能维持多久', '净颜靓白价格', '安全吗', '如何预约']
+                };
+            }
+
             // 全局"能白多久"检测（不依赖产品匹配，默认理解为"维持多久"）
-            // 注意：排除"见效"关键词，避免错误匹配"美白多久见效"
-            if ((lowerMsg.includes('能白多久') || lowerMsg.includes('白多久') || lowerMsg.includes('美白能维持') || lowerMsg.includes('美白维持')) && !lowerMsg.includes('见效')) {
+            // 注意：排除"见效"和"变白"关键词
+            if ((lowerMsg.includes('能白多久') || lowerMsg.includes('白多久') || lowerMsg.includes('美白能维持') || lowerMsg.includes('美白维持')) && !lowerMsg.includes('见效') && !lowerMsg.includes('变白')) {
                 return {
                     text: `宝，美白点滴打完一个疗程好好维护的话，<strong>可以维持近一年</strong>呢~ ✨<br><br>当然也要看个人体质和生活习惯：<br>☀️ 注意防晒，紫外线会加速色素沉积<br>💧 多喝水，帮助身体代谢<br>🥗 少吃辛辣油腻，清淡饮食<br>😴 保持规律作息<br><br>做好这些维护，美白效果可以保持很久的哦~`,
                     quickReplies: ['美白多久见效', '净颜靓白价格', '安全吗', '如何预约']
