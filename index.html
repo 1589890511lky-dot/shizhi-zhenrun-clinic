@@ -1599,8 +1599,7 @@
                 // 询问能维持多久（优先检查，避免被"多久见效"抢先）
                 if (lowerMsg.includes('维持') || lowerMsg.includes('保持') || lowerMsg.includes('持续') || 
                     lowerMsg.includes('能白多久') || lowerMsg.includes('白多久') || 
-                    (lowerMsg.includes('多久') && lowerMsg.includes('效')) ||
-                    (lowerMsg.includes('多久') && (lowerMsg.includes('维持') || lowerMsg.includes('保持') || lowerMsg.includes('持续')))) {
+                    lowerMsg.includes('效果多久') || lowerMsg.includes('效果能')) {
                     if (product.name === '净颜靓白') {
                         return {
                             text: `宝，美白点滴打完一个疗程好好维护的话，<strong>可以维持近一年</strong>呢~ ✨<br><br>当然也要看个人体质和生活习惯：<br>☀️ 注意防晒，紫外线会加速色素沉积<br>💧 多喝水，帮助身体代谢<br>🥗 少吃辛辣油腻，清淡饮食<br>😴 保持规律作息<br><br>做好这些维护，美白效果可以保持很久的哦~`,
