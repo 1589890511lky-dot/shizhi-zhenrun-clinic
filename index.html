@@ -1436,11 +1436,11 @@
             },
             {
                 name: '睡眠质量评估',
-                purpose: '了解入睡困难、睡眠浅、熬夜后疲惫、白天精神差等睡眠相关问题'
+                purpose: '了解失眠、入睡困难、睡眠浅、早醒、熬夜后疲惫、白天精神差等睡眠相关问题'
             },
             {
                 name: '营养代谢评估',
-                purpose: '关注疲劳、体重管理、饮食不规律、血糖代谢、能量状态等方向'
+                purpose: '关注疲劳、精力差、没精神、体重管理、饮食不规律、血糖代谢、能量状态等方向'
             },
             {
                 name: '免疫力调理咨询',
@@ -1571,6 +1571,12 @@
 3. 根据资料推荐合适的咨询或检查项目；项目名称不确定时，使用资料中的占位项目，不要编造新项目。
 4. 结尾引导用户添加预约微信 Njszzr001、留下联系方式或到店由医生结合体检数据进一步确认。
 
+理解规则：
+- 用户说“熬夜、喝酒、饮酒、应酬多”，重点关注肝功能、营养代谢、基础体检和医生面诊。
+- 用户说“失眠、睡不好、入睡困难、睡眠浅、早醒”，重点关注睡眠质量评估、基础体检、营养代谢评估和医生面诊。
+- 用户说“很累、疲劳、乏力、精力差、没精神、白天困、恢复慢”，重点关注基础体检、营养代谢评估、睡眠质量评估、免疫力调理咨询和医生面诊。
+- 用户表达的是身体状态或生活习惯时，不要回复“没有理解”，也不要只机械介绍产品目录；先推荐咨询/检查方向，再由医生判断是否适合具体调理项目。
+
 合规要求：
 - 不要直接诊断疾病，不要说用户一定患有某病。
 - 不要承诺治疗效果，不要夸大疗效，不要说“保证”“一定变好”“治好”。
@@ -1634,7 +1640,7 @@ ${buildClinicKnowledge()}`;
 
         function pickQuickReplies(message, answer) {
             const text = `${message} ${answer}`.toLowerCase();
-            if (text.includes('熬夜') || text.includes('喝酒') || text.includes('饮酒') || text.includes('累') || text.includes('疲劳')) {
+            if (isLifestyleConsultation(text)) {
                 return ['如何预约', '基础体检怎么做', '肝功能检查', '医生面诊咨询'];
             }
             if (text.includes('预约') || text.includes('微信') || text.includes('地址')) {
@@ -1647,6 +1653,18 @@ ${buildClinicKnowledge()}`;
                 return ['NIX+需要体检吗', 'NIX+和美白一起打吗', '如何预约'];
             }
             return ['有哪些项目', '如何预约', '安全吗'];
+        }
+
+        function isLifestyleConsultation(message) {
+            const lowerMsg = message.toLowerCase();
+            const lifestyleKeywords = [
+                '熬夜', '喝酒', '饮酒', '应酬', '酒局',
+                '很累', '疲劳', '乏力', '疲惫', '没精神', '精神差', '精力差', '精力不好', '白天困', '犯困', '恢复慢',
+                '失眠', '睡不好', '睡不着', '入睡困难', '睡眠浅', '早醒', '多梦', '睡眠差',
+                '亚健康', '免疫差', '容易感冒', '压力大', '焦虑', '代谢差', '胃口差', '饮食不规律'
+            ];
+
+            return lifestyleKeywords.some(keyword => lowerMsg.includes(keyword));
         }
 
         // 显示打字效果
@@ -1675,6 +1693,11 @@ ${buildClinicKnowledge()}`;
         // 生成回复
         function generateReply(message) {
             const lowerMsg = message.toLowerCase();
+
+            // 生活习惯/亚健康咨询兜底优先：AI 不可用时也像诊所客服顾问一样理解问题
+            if (isLifestyleConsultation(lowerMsg)) {
+                return buildLifestyleConsultationReply(lowerMsg);
+            }
             
             // 产品关键词别名映射（关键词 -> 产品名）
             const keywordMap = {
@@ -1843,16 +1866,6 @@ ${buildClinicKnowledge()}`;
                 };
             }
 
-            // 生活习惯/亚健康咨询兜底：AI 不可用时也避免回到“听不懂”
-            if (lowerMsg.includes('熬夜') || lowerMsg.includes('喝酒') || lowerMsg.includes('饮酒') ||
-                lowerMsg.includes('很累') || lowerMsg.includes('疲劳') || lowerMsg.includes('乏力') ||
-                lowerMsg.includes('睡不好') || lowerMsg.includes('睡眠') || lowerMsg.includes('代谢')) {
-                return {
-                    text: `辛苦啦，长期熬夜、饮酒后觉得累，建议先关注<strong>肝功能、睡眠质量、营养代谢和免疫状态</strong>这几个方向。<br><br>可以先预约：<br>• 基础体检<br>• 肝功能检查<br>• 睡眠质量评估<br>• 营养代谢评估<br>• 医生面诊咨询<br><br>具体适合哪个项目，需要医生结合您的体检数据和生活习惯进一步确认。预约微信：<strong>Njszzr001</strong>`,
-                    quickReplies: ['如何预约', '基础体检怎么做', '肝功能检查', '医生面诊咨询']
-                };
-            }
-
             // 询问有哪些项目/系列
             if (lowerMsg.includes('哪些') || lowerMsg.includes('什么项目') || lowerMsg.includes('有几款') || lowerMsg.includes('有什么') || lowerMsg.includes('项目') || lowerMsg.includes('系列')) {
                 return {
@@ -1913,6 +1926,46 @@ ${buildClinicKnowledge()}`;
             return {
                 text: '抱歉宝，我没有完全理解您的问题~<br><br>我可以帮您：<br>• 💰 查询项目价格和疗程<br>• ✨ 了解项目功效和效果<br>• 🛡️ 解答安全性疑问<br>• 📅 预约服务（微信：Njszzr001）<br><br>请尝试询问具体项目名称，如"NIX+价格"，或点击下方的快捷选项哦~',
                 quickReplies: ['NIX+价格', '净颜靓白价格', '有哪些项目', '安全吗']
+            };
+        }
+
+        function buildLifestyleConsultationReply(lowerMsg) {
+            const concerns = [];
+            const projects = ['基础体检'];
+
+            if (lowerMsg.includes('喝酒') || lowerMsg.includes('饮酒') || lowerMsg.includes('应酬') || lowerMsg.includes('酒局')) {
+                concerns.push('肝功能和营养代谢状态');
+                projects.push('肝功能检查', '营养代谢评估');
+            }
+
+            if (lowerMsg.includes('熬夜') || lowerMsg.includes('失眠') || lowerMsg.includes('睡不好') ||
+                lowerMsg.includes('睡不着') || lowerMsg.includes('入睡困难') || lowerMsg.includes('睡眠浅') ||
+                lowerMsg.includes('早醒') || lowerMsg.includes('多梦') || lowerMsg.includes('睡眠差')) {
+                concerns.push('睡眠质量和恢复情况');
+                projects.push('睡眠质量评估');
+            }
+
+            if (lowerMsg.includes('很累') || lowerMsg.includes('疲劳') || lowerMsg.includes('乏力') ||
+                lowerMsg.includes('疲惫') || lowerMsg.includes('没精神') || lowerMsg.includes('精神差') ||
+                lowerMsg.includes('精力差') || lowerMsg.includes('精力不好') || lowerMsg.includes('白天困') ||
+                lowerMsg.includes('犯困') || lowerMsg.includes('恢复慢')) {
+                concerns.push('能量代谢和免疫状态');
+                projects.push('营养代谢评估', '免疫力调理咨询');
+            }
+
+            if (concerns.length === 0) {
+                concerns.push('整体健康状态、代谢和免疫状态');
+                projects.push('营养代谢评估', '免疫力调理咨询');
+            }
+
+            projects.push('医生面诊咨询');
+            const uniqueProjects = [...new Set(projects)];
+            const concernText = [...new Set(concerns)].join('、');
+            const projectText = uniqueProjects.map(project => `• ${project}`).join('<br>');
+
+            return {
+                text: `辛苦啦，您描述的情况更像是需要先做<strong>亚健康状态评估</strong>，可以重点关注${concernText}。<br><br>建议先预约这些方向：<br>${projectText}<br><br>我们不能直接在线判断具体问题，最好由医生结合体检数据、作息饮食和既往情况确认是否适合后续调理项目。预约微信：<strong>Njszzr001</strong>`,
+                quickReplies: ['如何预约', '基础体检怎么做', '肝功能检查', '睡眠质量评估']
             };
         }
 
