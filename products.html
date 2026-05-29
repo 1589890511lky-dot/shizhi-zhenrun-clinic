@@ -56,15 +56,16 @@
         }
 
         .nav-logo {
-            font-size: 1.5rem;
-            font-weight: 300;
-            letter-spacing: 4px;
-            color: var(--text-dark);
+            width: 128px;
+            height: 64px;
+            display: flex;
+            align-items: center;
         }
 
-        .nav-logo span {
-            font-weight: 500;
-            color: var(--primary-dark);
+        .nav-logo img {
+            width: 100%;
+            height: auto;
+            display: block;
         }
 
         .nav-links {
@@ -306,16 +307,15 @@
         }
 
         .footer-logo {
-            font-size: 1.5rem;
-            font-weight: 300;
-            letter-spacing: 4px;
-            color: var(--text-dark);
-            margin-bottom: 15px;
+            width: 150px;
+            margin: 0 auto 15px;
         }
 
-        .footer-logo span {
-            font-weight: 500;
-            color: var(--primary-dark);
+        .footer-logo img {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin-bottom: 15px;
         }
 
         .footer-contact {
@@ -402,7 +402,9 @@
     <!-- 导航栏 -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="nav-logo">时秩<span>臻润</span></div>
+            <div class="nav-logo">
+                <img src="logo-szr.png" alt="时秩臻润">
+            </div>
             <div class="nav-links">
                 <a href="index.html" class="nav-link">
                     <i class="fas fa-home"></i> 首页
@@ -720,7 +722,9 @@
     <!-- 页脚 -->
     <footer class="footer">
         <div class="footer-content">
-            <div class="footer-logo">时秩<span>臻润</span></div>
+            <div class="footer-logo">
+                <img src="logo-szr.png" alt="时秩臻润">
+            </div>
             <p class="footer-contact">
                 预约微信：<strong>Njszzr001</strong><br>
                 南京市建邺区 · 专科点滴诊所
