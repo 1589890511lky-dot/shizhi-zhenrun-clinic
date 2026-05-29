@@ -1425,6 +1425,33 @@
 
         const chatHistory = [];
 
+        const consultationProjects = [
+            {
+                name: '基础体检',
+                purpose: '了解近期整体健康状态，适合初次咨询、疲劳、作息紊乱或想先做基础筛查的人群'
+            },
+            {
+                name: '肝功能检查',
+                purpose: '关注长期饮酒、熬夜、用药后可能需要了解的肝脏代谢相关指标'
+            },
+            {
+                name: '睡眠质量评估',
+                purpose: '了解入睡困难、睡眠浅、熬夜后疲惫、白天精神差等睡眠相关问题'
+            },
+            {
+                name: '营养代谢评估',
+                purpose: '关注疲劳、体重管理、饮食不规律、血糖代谢、能量状态等方向'
+            },
+            {
+                name: '免疫力调理咨询',
+                purpose: '适合经常疲劳、换季不适、恢复慢、压力大的人群做调理方向咨询'
+            },
+            {
+                name: '医生面诊咨询',
+                purpose: '由医生结合体检数据、既往史、用药史和个人需求判断是否适合具体项目'
+            }
+        ];
+
         // 保存项目数据到本地存储
         function saveProducts() {
             localStorage.setItem('clinicProducts', JSON.stringify(products));
@@ -1519,17 +1546,39 @@
             });
 
             const faqLines = faqs.map(faq => `Q：${faq.question}\nA：${faq.answer}`);
+            const consultationLines = consultationProjects.map(project => `${project.name}：${project.purpose}`);
 
             return [
                 '诊所：时秩臻润健康管理中心，南京市建邺区，河西德基附近，专科点滴诊所。',
                 '预约微信：Njszzr001。南京南站打车约20分钟，新街口打车约25分钟。',
                 '预约流程：添加微信或点击网页预约；体检+点滴大约一个半小时；诊所有绿通，当天可出检测结果。',
                 '重要边界：不要诊断疾病，不承诺治疗效果，不替代医生面诊。涉及禁忌、孕期、哺乳期、肿瘤、癫痫、严重慢病、药物过敏或身体不适时，建议先咨询医生/院长并做体检。',
+                '咨询/检查类占位项目（后续可替换为正式项目名）：',
+                ...consultationLines,
                 '产品资料：',
                 ...productLines,
                 '常见问答：',
                 ...faqLines
             ].join('\n');
+        }
+
+        function buildSystemPrompt() {
+            return `你是时秩臻润健康管理中心的中文诊所客服顾问，不是普通聊天机器人。
+
+目标：
+1. 先理解用户描述的症状、生活习惯和需求，例如熬夜、饮酒、疲劳、睡眠差、代谢压力、免疫状态等。
+2. 用自然、亲切、专业的语气回复，先共情，再说明可关注的健康方向。
+3. 根据资料推荐合适的咨询或检查项目；项目名称不确定时，使用资料中的占位项目，不要编造新项目。
+4. 结尾引导用户添加预约微信 Njszzr001、留下联系方式或到店由医生结合体检数据进一步确认。
+
+合规要求：
+- 不要直接诊断疾病，不要说用户一定患有某病。
+- 不要承诺治疗效果，不要夸大疗效，不要说“保证”“一定变好”“治好”。
+- 涉及明显不适、长期症状、严重疾病、孕期/哺乳期、药物过敏、肿瘤、癫痫、严重慢病时，建议先医生面诊或正规医疗机构检查。
+- 回答适合网页聊天，尽量控制在 220 字内。
+
+诊所资料：
+${buildClinicKnowledge()}`;
         }
 
         async function generateAIReply(message) {
@@ -1540,12 +1589,13 @@
             const messages = [
                 {
                     role: 'system',
-                    content: `你是时秩臻润健康管理中心的中文客服助理。回答要自然、亲切、专业，尽量像真人客服，不要死板套模板。只根据以下资料回答，不确定就引导用户加预约微信 Njszzr001 或到店咨询。价格、预约方式、地址必须准确。回答不要超过180字，适合网页聊天。不要使用诊断或治疗承诺，不要说“保证治好”。\n\n${buildClinicKnowledge()}`
+                    content: buildSystemPrompt()
                 },
                 ...chatHistory.slice(-8),
                 { role: 'user', content: message }
             ];
 
+            console.info('Sending chat message to AI proxy:', OPENROUTER_CONFIG.proxyUrl || 'https://openrouter.ai/api/v1/chat/completions');
             const response = await fetch(OPENROUTER_CONFIG.proxyUrl || 'https://openrouter.ai/api/v1/chat/completions', {
                 method: 'POST',
                 headers: {
@@ -1563,7 +1613,8 @@
             });
 
             if (!response.ok) {
-                throw new Error(`OpenRouter request failed: ${response.status}`);
+                const errorText = await response.text().catch(() => '');
+                throw new Error(`OpenRouter request failed: ${response.status} ${errorText}`);
             }
 
             const data = await response.json();
@@ -1583,6 +1634,9 @@
 
         function pickQuickReplies(message, answer) {
             const text = `${message} ${answer}`.toLowerCase();
+            if (text.includes('熬夜') || text.includes('喝酒') || text.includes('饮酒') || text.includes('累') || text.includes('疲劳')) {
+                return ['如何预约', '基础体检怎么做', '肝功能检查', '医生面诊咨询'];
+            }
             if (text.includes('预约') || text.includes('微信') || text.includes('地址')) {
                 return ['NIX+价格', '净颜靓白价格', '有哪些项目'];
             }
@@ -1616,7 +1670,7 @@
         }
 
         // 安全性标准话术
-        const safetyReply = '对身体没有伤害的哦，我们美白的点滴是修复肝脏代谢色素功能➕美白，是根据你的体检检测报告去做复配的方案，对身体没有副作用。药品都是国药准字哦，我们是一家专科诊所，美白是我们院内自己配的，不是用的现成的某些品牌的美白产品，在诊所打过点滴的小姐姐都没有任何不适';
+        const safetyReply = '安全性需要结合您的体检数据、既往病史、用药史和过敏史来判断哦。我们会建议先做基础检查，再由医生根据报告评估是否适合对应项目；如果您在孕期、哺乳期，或有肿瘤、癫痫、严重慢病、药物过敏等情况，一定要先面诊确认。';
 
         // 生成回复
         function generateReply(message) {
@@ -1786,6 +1840,16 @@
                 return {
                     text: `宝，美白点滴打完一个疗程好好维护的话，<strong>可以维持近一年</strong>呢~ ✨<br><br>当然也要看个人体质和生活习惯：<br>☀️ 注意防晒，紫外线会加速色素沉积<br>💧 多喝水，帮助身体代谢<br>🥗 少吃辛辣油腻，清淡饮食<br>😴 保持规律作息<br><br>做好这些维护，美白效果可以保持很久的哦~`,
                     quickReplies: ['美白多久见效', '净颜靓白价格', '安全吗', '如何预约']
+                };
+            }
+
+            // 生活习惯/亚健康咨询兜底：AI 不可用时也避免回到“听不懂”
+            if (lowerMsg.includes('熬夜') || lowerMsg.includes('喝酒') || lowerMsg.includes('饮酒') ||
+                lowerMsg.includes('很累') || lowerMsg.includes('疲劳') || lowerMsg.includes('乏力') ||
+                lowerMsg.includes('睡不好') || lowerMsg.includes('睡眠') || lowerMsg.includes('代谢')) {
+                return {
+                    text: `辛苦啦，长期熬夜、饮酒后觉得累，建议先关注<strong>肝功能、睡眠质量、营养代谢和免疫状态</strong>这几个方向。<br><br>可以先预约：<br>• 基础体检<br>• 肝功能检查<br>• 睡眠质量评估<br>• 营养代谢评估<br>• 医生面诊咨询<br><br>具体适合哪个项目，需要医生结合您的体检数据和生活习惯进一步确认。预约微信：<strong>Njszzr001</strong>`,
+                    quickReplies: ['如何预约', '基础体检怎么做', '肝功能检查', '医生面诊咨询']
                 };
             }
 
