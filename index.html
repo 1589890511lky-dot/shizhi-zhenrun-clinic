@@ -1671,6 +1671,57 @@
             }
         ];
 
+        const productPriceKnowledge = {
+            '焕龄Nix+': '50ml/30min：¥2,980；100ml/50min：¥4,980；200ml/80min：¥7,980；300ml/100min：¥9,980',
+            'NIX+': '50ml/30min：¥2,980；100ml/50min：¥4,980；200ml/80min：¥7,980；300ml/100min：¥9,980',
+            '极客护肝': '经典版 ¥3,800/单次；高定版 ¥6,800/两次；至臻版 ¥12,800/疗程',
+            '极客减重': '经典版 ¥3,800/单次；高定版 ¥6,800/两次；至臻版 ¥12,800/疗程',
+            '速愈needle': '经典版 ¥980；高定版 ¥1,980；至臻版 ¥2,980',
+            '抗衰needle': '经典版 ¥3,800/单次；高定版 ¥6,800/两次；至臻版 ¥12,800/疗程',
+            '回春needle': '经典版 ¥4,800/单次；高定版 ¥8,800/两次；至臻版 ¥15,800/疗程',
+            '六维闪白': '经典版 ¥3,980/单次；高定版 ¥6,980/两次；至臻版 ¥12,800/疗程',
+            '大蒜needle': '经典版 ¥698；高定版 ¥798；至臻版 ¥998',
+            '能量needle': '经典版 ¥980；高定版 ¥1,680；至臻版 ¥2,880',
+            '稳糖needle': '经典版 ¥980；高定版 ¥1,680；至臻版 ¥2,880',
+            '减脂needle': '经典版 ¥980；高定版 ¥1,680；至臻版 ¥2,880',
+            '醒酒护肝': '经典版 ¥980；高定版 ¥1,680；至臻版 ¥2,880',
+            '抗炎净基': '经典版 ¥980；高定版 ¥1,680；至臻版 ¥2,880',
+            '净颜靓白': '经典版 ¥980；高定版 ¥1,980；至臻版 ¥2,880',
+            '肝胆清零': '经典版 ¥2,980；高定版 ¥5,980；至臻版 ¥9,980',
+            '消肿养肾': '经典版 ¥2,980；高定版 ¥5,980；至臻版 ¥9,980',
+            '胃肠needle': '经典版 ¥2,980；高定版 ¥5,980；至臻版 ¥9,980',
+            '排毒needle': '经典版 ¥3,980；高定版 ¥6,980；至臻版 ¥12,800',
+            '安睡无忧': '经典版 ¥980；高定版 ¥1,680；至臻版 ¥2,880',
+            '气血needle': '经典版 ¥980；高定版 ¥1,680；至臻版 ¥2,880',
+            '心脉通畅': '经典版 ¥980；高定版 ¥1,680；至臻版 ¥2,880',
+            '脑力needle': '经典版 ¥2,980；高定版 ¥5,980；至臻版 ¥9,980',
+            '骨力新生': '经典版 ¥2,980；高定版 ¥5,980；至臻版 ¥9,980',
+            '甲稳needle': '经典版 ¥2,980；高定版 ¥5,980；至臻版 ¥9,980',
+            '斗志昂扬': '经典版 ¥3,980；高定版 ¥6,980；至臻版 ¥12,800',
+            '春潮私护': '经典版 ¥3,980；高定版 ¥6,980；至臻版 ¥12,800',
+            '荷尔蒙之春': '经典版 ¥3,980；高定版 ¥6,980；至臻版 ¥12,800',
+            '甲基化needle': '经典版 ¥12,800；高定版 ¥22,800；至臻版 ¥38,800',
+            '慢病管理': '经典版 ¥16,800；高定版 ¥28,800；至臻版 ¥39,800',
+            '免疫needle': '经典版 ¥980；高定版 ¥1,680；至臻版 ¥2,880',
+            '抗炎鸡尾酒': '经典版 ¥9,800；高定版 ¥16,800；至臻版 ¥25,800',
+            '抗敏鸡尾酒': '经典版 ¥9,800；高定版 ¥16,800；至臻版 ¥25,800',
+            '乳甲宫肺': '经典版 ¥12,800；高定版 ¥22,800；至臻版 ¥38,800',
+            '脑肌力酮': '经典版 ¥12,800；高定版 ¥22,800；至臻版 ¥38,800',
+            '雾化': '经典版 ¥2,980；高定版 ¥3,980；至臻版 ¥5,980',
+            '鼻喷': '经典版 ¥2,980；高定版 ¥3,980；至臻版 ¥5,980',
+            '静脉': '经典版 ¥12,800；高定版 ¥26,800；至臻版 ¥39,800',
+            '单项补剂': '高定版 ¥6,800/疗程',
+            '定制补剂': '高定版 ¥19,800/疗程',
+            '深海Portfolio': '高定版 ¥98,000/疗程',
+            '维秘Portfolio': '高定版 ¥98,000/疗程',
+            '全生命周期单人年卡': '高定版 ¥198,000',
+            '家庭全生命周期年卡': '高定版 ¥528,000'
+        };
+
+        function getCatalogPrice(productName) {
+            return productPriceKnowledge[productName] || '';
+        }
+
         // 保存项目数据到本地存储
         function saveProducts() {
             localStorage.setItem('clinicProducts', JSON.stringify(products));
@@ -1767,8 +1818,10 @@
             const faqLines = faqs.map(faq => `Q：${faq.question}\nA：${faq.answer}`);
             const consultationLines = consultationProjects.map(project => `${project.name}：${project.purpose}`);
             const catalogLines = productCatalogKnowledge.map(product => {
-                return `${product.name}（${product.series}）：${product.effects}。适用人群：${product.target}。相关关键词：${product.keywords.join('、')}`;
+                const price = getCatalogPrice(product.name);
+                return `${product.name}（${product.series}）：${product.effects}。${price ? `价格：${price}。` : ''}适用人群：${product.target}。相关关键词：${product.keywords.join('、')}`;
             });
+            const priceLines = Object.entries(productPriceKnowledge).map(([name, price]) => `${name}：${price}`);
 
             return [
                 '诊所：时秩臻润健康管理中心，南京市建邺区，河西德基附近，专科点滴诊所。',
@@ -1779,6 +1832,8 @@
                 ...consultationLines,
                 '产品册项目知识库（用户说相同或语义相似关键词时，可推荐对应项目；推荐前需说明需医生结合体检确认）：',
                 ...catalogLines,
+                '完整价格表（顾客问价格/多少钱/费用/疗程时按这里回答，不确定具体版本时列出经典版/高定版/至臻版）：',
+                ...priceLines,
                 '产品资料：',
                 ...productLines,
                 '常见问答：',
@@ -1802,6 +1857,7 @@
 - 用户表达的是身体状态或生活习惯时，不要回复“没有理解”，也不要只机械介绍产品目录；先推荐咨询/检查方向，再由医生判断是否适合具体调理项目。
 - 用户提到产品册相关症状、需求或语义相似词时，从“产品册项目知识库”中挑选最匹配的 1-3 个项目推荐。例如喝酒/应酬优先醒酒护肝、肝胆清零、肝功能检查；失眠优先安睡无忧、睡眠质量评估；精力差/疲劳优先能量needle、焕龄Nix+、营养代谢评估；胃痛反酸优先胃肠needle；甲状腺/甲功优先甲稳needle；更年期/激素优先荷尔蒙之春。
 - 推荐项目时要解释“为什么适合了解这个方向”，但不要说一定能解决或治疗。
+- 用户问“价格、多少钱、费用、疗程、贵不贵”时，必须优先查询“完整价格表”，按项目列出对应版本价格；不要编造价格。如果用户没说清具体项目，先问想了解哪个项目，也可列出相关项目价格。
 
 合规要求：
 - 不要直接诊断疾病，不要说用户一定患有某病。
@@ -1900,6 +1956,7 @@ ${buildClinicKnowledge()}`;
             const lowerMsg = message.toLowerCase();
             const scored = productCatalogKnowledge.map(product => {
                 let score = 0;
+                if (lowerMsg.includes(product.name.toLowerCase())) score += 6;
                 for (const alias of product.aliases) {
                     if (lowerMsg.includes(alias.toLowerCase())) score += 4;
                 }
@@ -1942,7 +1999,8 @@ ${buildClinicKnowledge()}`;
             if (recommendations.length === 0) return null;
 
             const lines = recommendations.map(product => {
-                return `• <strong>${product.name}</strong>：${product.effects}`;
+                const price = getCatalogPrice(product.name);
+                return `• <strong>${product.name}</strong>：${product.effects}${price ? `<br>价格：${price}` : ''}`;
             }).join('<br>');
 
             return {
@@ -2253,7 +2311,10 @@ ${buildClinicKnowledge()}`;
             const projectText = uniqueProjects.map(project => `• ${project}`).join('<br>');
             const catalogRecommendations = findCatalogRecommendations(lowerMsg);
             const productText = catalogRecommendations.length > 0
-                ? `<br><br>产品册里也可以重点了解：<br>${catalogRecommendations.map(product => `• <strong>${product.name}</strong>：${product.effects}`).join('<br>')}`
+                ? `<br><br>产品册里也可以重点了解：<br>${catalogRecommendations.map(product => {
+                    const price = getCatalogPrice(product.name);
+                    return `• <strong>${product.name}</strong>：${product.effects}${price ? `<br>价格：${price}` : ''}`;
+                }).join('<br>')}`
                 : '';
 
             return {
