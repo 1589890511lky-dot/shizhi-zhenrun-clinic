@@ -8,18 +8,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #C4A77D;
-            --primary-light: #E8DCC8;
-            --primary-dark: #A68B5B;
-            --bg-warm: #FAF8F5;
-            --bg-cream: #F5F0E8;
-            --text-dark: #3D3D3D;
-            --text-medium: #6B6B6B;
-            --text-light: #999999;
+            --primary: #B58B4C;
+            --primary-light: #E6D7BE;
+            --primary-dark: #8E6A34;
+            --bg-warm: #FFFFFF;
+            --bg-cream: #F7F3ED;
+            --surface: rgba(255, 255, 255, 0.82);
+            --text-dark: #1D1D1F;
+            --text-medium: #515154;
+            --text-light: #86868B;
             --white: #FFFFFF;
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-            --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.1);
-            --radius: 16px;
+            --shadow: 0 10px 30px rgba(29, 29, 31, 0.06);
+            --shadow-hover: 0 18px 48px rgba(29, 29, 31, 0.09);
+            --radius: 12px;
             --radius-lg: 24px;
         }
 
@@ -31,33 +32,37 @@
 
         body {
             font-family: 'Noto Sans SC', sans-serif;
-            background: linear-gradient(135deg, var(--bg-warm) 0%, var(--bg-cream) 100%);
+            background:
+                radial-gradient(circle at 50% 6%, rgba(198, 154, 80, 0.12), transparent 34%),
+                linear-gradient(180deg, #FFFFFF 0%, #FBFAF8 48%, #F7F3ED 100%);
             min-height: 100vh;
             color: var(--text-dark);
+            -webkit-font-smoothing: antialiased;
         }
 
         /* 导航栏 */
         .navbar {
-            background: var(--white);
-            padding: 15px 0;
-            box-shadow: var(--shadow);
+            background: rgba(255, 255, 255, 0.78);
+            backdrop-filter: saturate(180%) blur(24px);
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(142, 106, 52, 0.08);
             position: sticky;
             top: 0;
             z-index: 100;
         }
 
         .nav-container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 44px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .nav-logo {
-            width: 128px;
-            height: 64px;
+            width: 150px;
+            height: 58px;
             display: flex;
             align-items: center;
         }
@@ -70,37 +75,42 @@
 
         .nav-links {
             display: flex;
-            gap: 30px;
+            gap: 10px;
         }
 
         .nav-link {
             color: var(--text-medium);
             text-decoration: none;
-            font-size: 0.95rem;
-            transition: color 0.3s;
+            font-size: 0.86rem;
+            transition: all 0.3s;
             display: flex;
             align-items: center;
             gap: 8px;
+            padding: 9px 18px;
+            border-radius: 999px;
+            letter-spacing: 1px;
         }
 
         .nav-link:hover {
-            color: var(--primary);
+            color: var(--primary-dark);
+            background: rgba(198, 154, 80, 0.08);
         }
 
         .nav-link.active {
             color: var(--primary-dark);
             font-weight: 500;
+            background: rgba(198, 154, 80, 0.1);
         }
 
         /* 头部区域 */
         .header {
             text-align: center;
-            padding: 60px 20px 40px;
-            background: linear-gradient(180deg, rgba(196, 167, 125, 0.08) 0%, transparent 100%);
+            padding: 82px 20px 54px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.62) 0%, transparent 100%);
         }
 
         .header h1 {
-            font-size: 2.5rem;
+            font-size: clamp(2rem, 4vw, 3.4rem);
             font-weight: 300;
             color: var(--text-dark);
             margin-bottom: 15px;
@@ -113,7 +123,7 @@
 
         .header p {
             color: var(--text-medium);
-            font-size: 1.1rem;
+            font-size: 0.98rem;
             max-width: 600px;
             margin: 0 auto;
             line-height: 1.8;
@@ -143,9 +153,9 @@
 
         /* 产品手册展示 */
         .brochure-section {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 34px 28px;
         }
 
         .brochure-title {
@@ -154,7 +164,7 @@
         }
 
         .brochure-title h2 {
-            font-size: 1.8rem;
+            font-size: 1.55rem;
             font-weight: 400;
             color: var(--text-dark);
             margin-bottom: 10px;
@@ -170,6 +180,8 @@
             box-shadow: var(--shadow-hover);
             margin-bottom: 30px;
             transition: transform 0.3s;
+            background: var(--white);
+            border: 1px solid rgba(142, 106, 52, 0.1);
         }
 
         .brochure-image:hover {
@@ -178,9 +190,9 @@
 
         /* 产品系列介绍 */
         .series-section {
-            max-width: 1200px;
-            margin: 60px auto;
-            padding: 0 20px;
+            max-width: 1280px;
+            margin: 56px auto;
+            padding: 0 28px;
         }
 
         .section-title {
@@ -189,7 +201,7 @@
         }
 
         .section-title h2 {
-            font-size: 2rem;
+            font-size: 1.72rem;
             font-weight: 400;
             color: var(--text-dark);
             margin-bottom: 15px;
@@ -203,21 +215,22 @@
         /* 系列卡片 */
         .series-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 22px;
         }
 
         .series-card {
-            background: var(--white);
+            background: var(--surface);
+            backdrop-filter: blur(18px);
             border-radius: var(--radius-lg);
-            padding: 35px;
+            padding: 28px;
             box-shadow: var(--shadow);
             transition: all 0.3s;
             border: 1px solid rgba(196, 167, 125, 0.1);
         }
 
         .series-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
             box-shadow: var(--shadow-hover);
             border-color: rgba(196, 167, 125, 0.3);
         }
@@ -243,7 +256,7 @@
         }
 
         .series-info h3 {
-            font-size: 1.3rem;
+            font-size: 1.16rem;
             font-weight: 500;
             color: var(--text-dark);
             margin-bottom: 5px;
@@ -258,8 +271,9 @@
 
         .series-desc {
             color: var(--text-medium);
-            line-height: 1.8;
+            line-height: 1.7;
             margin-bottom: 20px;
+            font-size: 0.9rem;
         }
 
         .product-list {
@@ -272,10 +286,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 15px;
-            background: var(--bg-warm);
+            padding: 12px 14px;
+            background: rgba(255, 255, 255, 0.72);
             border-radius: 10px;
             transition: all 0.3s;
+            border: 1px solid rgba(142, 106, 52, 0.08);
         }
 
         .product-item:hover {
@@ -285,16 +300,19 @@
         .product-name {
             font-weight: 500;
             color: var(--text-dark);
+            font-size: 0.9rem;
         }
 
         .product-price {
             color: var(--primary-dark);
             font-weight: 600;
+            font-size: 0.9rem;
         }
 
         /* 页脚 */
         .footer {
-            background: var(--white);
+            background: rgba(255, 255, 255, 0.82);
+            backdrop-filter: blur(18px);
             padding: 40px 20px;
             margin-top: 80px;
             border-top: 1px solid rgba(196, 167, 125, 0.1);
@@ -346,20 +364,112 @@
 
         /* 响应式设计 */
         @media (max-width: 768px) {
+            body {
+                font-size: 13px;
+            }
+
+            .nav-container {
+                padding: 0 14px;
+            }
+
+            .nav-logo {
+                width: 112px;
+                height: 42px;
+            }
+
             .nav-links {
+                gap: 8px;
+            }
+
+            .nav-link {
+                font-size: 0.72rem;
+                padding: 7px 10px;
+            }
+
+            .nav-link i {
                 display: none;
             }
 
+            .header {
+                padding: 42px 16px 26px;
+            }
+
             .header h1 {
-                font-size: 1.8rem;
+                font-size: 1.55rem;
+                margin-bottom: 10px;
+            }
+
+            .header p {
+                font-size: 0.78rem;
+                line-height: 1.65;
+            }
+
+            .tagline {
+                font-size: 0.76rem;
+                gap: 10px;
+            }
+
+            .brochure-section,
+            .series-section {
+                padding-left: 14px;
+                padding-right: 14px;
+            }
+
+            .brochure-title {
+                margin-bottom: 24px;
+            }
+
+            .brochure-title h2,
+            .section-title h2 {
+                font-size: 1.25rem;
+            }
+
+            .brochure-title p,
+            .section-title p {
+                font-size: 0.78rem;
             }
 
             .series-grid {
                 grid-template-columns: 1fr;
+                gap: 14px;
             }
 
             .series-card {
-                padding: 25px;
+                padding: 18px;
+                border-radius: 18px;
+            }
+
+            .series-header {
+                gap: 12px;
+                margin-bottom: 14px;
+            }
+
+            .series-number {
+                width: 42px;
+                height: 42px;
+                font-size: 1rem;
+            }
+
+            .series-info h3 {
+                font-size: 1rem;
+            }
+
+            .series-info .en-name {
+                font-size: 0.68rem;
+            }
+
+            .series-desc {
+                font-size: 0.78rem;
+                line-height: 1.58;
+            }
+
+            .product-item {
+                padding: 10px 12px;
+            }
+
+            .product-name,
+            .product-price {
+                font-size: 0.78rem;
             }
         }
 
