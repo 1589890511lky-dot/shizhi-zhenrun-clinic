@@ -1624,6 +1624,9 @@ ${buildClinicKnowledge()}`;
             }
 
             const data = await response.json();
+            if (data?.debug) {
+                console.info('OpenRouter debug:', data.debug);
+            }
             const text = data?.choices?.[0]?.message?.content?.trim();
             if (!text) {
                 return null;

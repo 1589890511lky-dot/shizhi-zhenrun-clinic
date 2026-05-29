@@ -60,6 +60,7 @@ export default {
             ...clientMessages.filter(message => message && message.role && typeof message.content === 'string')
         ];
 
+        const requestedModel = payload.model || env.OPENROUTER_MODEL || 'openrouter/auto';
         const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
             method: 'POST',
             headers: {
@@ -69,19 +70,38 @@ export default {
                 'X-Title': '时秩臻润智能客服'
             },
             body: JSON.stringify({
-                model: payload.model || env.OPENROUTER_MODEL || 'openrouter/auto',
+                model: requestedModel,
                 messages,
                 temperature: payload.temperature ?? 0.55,
                 max_tokens: payload.max_tokens ?? 320
             })
         });
 
+        const contentType = response.headers.get('Content-Type') || 'application/json';
         const data = await response.text();
-        return new Response(data, {
+
+        if (!contentType.includes('application/json')) {
+            return new Response(data, {
+                status: response.status,
+                headers: {
+                    ...corsHeaders,
+                    'Content-Type': contentType
+                }
+            });
+        }
+
+        const json = JSON.parse(data);
+        json.debug = {
+            requested_model: requestedModel,
+            returned_model: json.model || null,
+            usage: json.usage || null
+        };
+
+        return new Response(JSON.stringify(json), {
             status: response.status,
             headers: {
                 ...corsHeaders,
-                'Content-Type': response.headers.get('Content-Type') || 'application/json'
+                'Content-Type': 'application/json'
             }
         });
     }
