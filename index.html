@@ -507,6 +507,7 @@
 
         /* 管理后台入口 */
         .admin-entry {
+            display: none;
             position: fixed;
             bottom: 30px;
             right: 30px;
@@ -1234,7 +1235,7 @@
             <div class="modal-body">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <h3 style="color: var(--text-dark); font-weight: 500;">项目列表</h3>
-                    <button class="btn btn-primary" onclick="openAddProductModal()">
+                    <button class="btn btn-primary" onclick="openAddProductModal()" style="display: none;">
                         <i class="fas fa-plus"></i> 添加项目
                     </button>
                 </div>
@@ -2491,8 +2492,7 @@ ${buildClinicKnowledge()}`;
         }
 
         function openAdminModal() {
-            renderAdminProductList();
-            document.getElementById('adminModal').classList.add('active');
+            alert('公开页面不开放项目数据管理权限，请通过后台代码仓库维护项目信息。');
         }
 
         // 关闭弹窗
@@ -2578,86 +2578,23 @@ ${buildClinicKnowledge()}`;
                         <h4>${p.name}</h4>
                         <p>单次：${p.price}元 | 疗程：${p.packagePrice}元/${p.sessions}次</p>
                     </div>
-                    <div class="product-actions">
-                        <button class="icon-btn" onclick="editProduct(${p.id})" title="编辑">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                    </div>
                 </div>
             `).join('');
         }
 
         // 打开添加项目弹窗
         function openAddProductModal() {
-            document.getElementById('productFormTitle').innerHTML = '<i class="fas fa-plus"></i> 添加项目';
-            document.getElementById('productId').value = '';
-            document.getElementById('productName').value = '';
-            document.getElementById('productPrice').value = '';
-            document.getElementById('productSessions').value = '';
-            document.getElementById('productPackagePrice').value = '';
-            document.getElementById('productBenefits').value = '';
-            document.getElementById('productTarget').value = '';
-            document.getElementById('productNotes').value = '';
-            document.getElementById('productFormModal').classList.add('active');
+            alert('公开页面不开放添加项目权限，请通过后台代码仓库维护项目信息。');
         }
 
         // 编辑项目
         function editProduct(id) {
-            const product = products.find(p => p.id === id);
-            if (!product) return;
-
-            document.getElementById('productFormTitle').innerHTML = '<i class="fas fa-edit"></i> 编辑项目';
-            document.getElementById('productId').value = product.id;
-            document.getElementById('productName').value = product.name;
-            document.getElementById('productPrice').value = product.price;
-            document.getElementById('productSessions').value = product.sessions;
-            document.getElementById('productPackagePrice').value = product.packagePrice;
-            document.getElementById('productBenefits').value = product.benefits;
-            document.getElementById('productTarget').value = product.target;
-            document.getElementById('productNotes').value = product.notes;
-            document.getElementById('productFormModal').classList.add('active');
+            alert('公开页面不开放编辑项目权限，请通过后台代码仓库维护项目信息。');
         }
 
         // 保存项目
         function saveProduct() {
-            const id = document.getElementById('productId').value;
-            const name = document.getElementById('productName').value;
-            const price = parseFloat(document.getElementById('productPrice').value);
-            const sessions = parseInt(document.getElementById('productSessions').value);
-            const packagePrice = parseFloat(document.getElementById('productPackagePrice').value);
-            const benefits = document.getElementById('productBenefits').value;
-            const target = document.getElementById('productTarget').value;
-            const notes = document.getElementById('productNotes').value;
-
-            if (!name || !price || !sessions || !packagePrice) {
-                alert('请填写完整信息');
-                return;
-            }
-
-            const productData = {
-                id: id ? parseInt(id) : Date.now(),
-                name,
-                price,
-                sessions,
-                packagePrice,
-                benefits,
-                target,
-                notes
-            };
-
-            if (id) {
-                const index = products.findIndex(p => p.id === parseInt(id));
-                if (index !== -1) {
-                    products[index] = productData;
-                }
-            } else {
-                products.push(productData);
-            }
-
-            saveProducts();
-            renderAdminProductList();
-            closeModal('productFormModal');
-            alert('保存成功！');
+            alert('公开页面不开放保存项目权限，请通过后台代码仓库维护项目信息。');
         }
 
         // 删除项目
