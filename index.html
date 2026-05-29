@@ -1413,13 +1413,25 @@
             }
         ];
 
+        const OPENROUTER_CONFIG = {
+            // 推荐生产配置：把 Cloudflare Worker/后端代理地址填到这里，密钥只放在服务端。
+            proxyUrl: localStorage.getItem('openrouterProxyUrl') || 'https://shizhi-zhenrun-openrouter.1589890511lky.workers.dev',
+            // 仅供本地测试：在浏览器控制台执行 localStorage.setItem('openrouterApiKey', 'sk-or-v1-...')
+            apiKey: localStorage.getItem('openrouterApiKey') || '',
+            model: localStorage.getItem('openrouterModel') || 'openrouter/auto',
+            siteUrl: 'https://1589890511lky-dot.github.io/shizhi-zhenrun-clinic/',
+            siteName: '时秩臻润智能客服'
+        };
+
+        const chatHistory = [];
+
         // 保存项目数据到本地存储
         function saveProducts() {
             localStorage.setItem('clinicProducts', JSON.stringify(products));
         }
 
         // 发送消息
-        function sendMessage() {
+        async function sendMessage() {
             const input = document.getElementById('chatInput');
             const message = input.value.trim();
             if (!message) return;
@@ -1430,12 +1442,22 @@
             // 显示打字效果
             showTyping();
 
-            // 模拟AI回复
-            setTimeout(() => {
+            try {
+                const aiReply = await generateAIReply(message);
+                hideTyping();
+                if (aiReply) {
+                    addMessage(formatAIText(aiReply.text), 'bot', aiReply.quickReplies, { allowHtml: true });
+                    return;
+                }
+
+                const reply = generateReply(message);
+                addMessage(reply.text, 'bot', reply.quickReplies, { allowHtml: true });
+            } catch (error) {
+                console.warn('OpenRouter reply failed, using local fallback:', error);
                 hideTyping();
                 const reply = generateReply(message);
-                addMessage(reply.text, 'bot', reply.quickReplies);
-            }, 1000);
+                addMessage(reply.text, 'bot', reply.quickReplies, { allowHtml: true });
+            }
         }
 
         // 添加快捷回复
@@ -1445,20 +1467,21 @@
         }
 
         // 添加消息到聊天区
-        function addMessage(text, sender, quickReplies = []) {
+        function addMessage(text, sender, quickReplies = [], options = {}) {
             const chatMessages = document.getElementById('chatMessages');
             const time = new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
+            const safeText = options.allowHtml ? text : escapeHtml(text);
             
             let quickRepliesHtml = '';
             if (quickReplies && quickReplies.length > 0) {
                 quickRepliesHtml = '<div class="quick-replies">' + 
-                    quickReplies.map(qr => `<span class="quick-reply" onclick="sendQuickReply('${qr}')">${qr}</span>`).join('') + 
+                    quickReplies.map(qr => `<span class="quick-reply" onclick='sendQuickReply(${JSON.stringify(qr)})'>${escapeHtml(qr)}</span>`).join('') +
                     '</div>';
             }
 
             const messageHtml = `
                 <div class="message ${sender}">
-                    <div>${text}</div>
+                    <div>${safeText}</div>
                     ${quickRepliesHtml}
                     <div class="message-time">${time}</div>
                 </div>
@@ -1466,6 +1489,110 @@
 
             chatMessages.insertAdjacentHTML('beforeend', messageHtml);
             chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function escapeHtml(value) {
+            return String(value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function formatAIText(text) {
+            return escapeHtml(text)
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\n/g, '<br>');
+        }
+
+        function buildClinicKnowledge() {
+            const productLines = products.map(product => {
+                let price = `¥${product.price.toLocaleString()}`;
+                if (product.name === 'NIX+' && product.priceList) {
+                    price = product.priceList.map(item => `${item.dosage}/${item.duration} ¥${item.price.toLocaleString()}`).join('；');
+                } else if (product.priceTiers) {
+                    price = `经典版 ¥${product.priceTiers.classic.toLocaleString()}；高定版 ¥${product.priceTiers.premium.toLocaleString()}；至臻版 ¥${product.priceTiers.ultimate.toLocaleString()}`;
+                }
+
+                return `${product.name}（${product.series}）：${price}。功效：${product.benefits}。适用人群：${product.target}`;
+            });
+
+            const faqLines = faqs.map(faq => `Q：${faq.question}\nA：${faq.answer}`);
+
+            return [
+                '诊所：时秩臻润健康管理中心，南京市建邺区，河西德基附近，专科点滴诊所。',
+                '预约微信：Njszzr001。南京南站打车约20分钟，新街口打车约25分钟。',
+                '预约流程：添加微信或点击网页预约；体检+点滴大约一个半小时；诊所有绿通，当天可出检测结果。',
+                '重要边界：不要诊断疾病，不承诺治疗效果，不替代医生面诊。涉及禁忌、孕期、哺乳期、肿瘤、癫痫、严重慢病、药物过敏或身体不适时，建议先咨询医生/院长并做体检。',
+                '产品资料：',
+                ...productLines,
+                '常见问答：',
+                ...faqLines
+            ].join('\n');
+        }
+
+        async function generateAIReply(message) {
+            if (!OPENROUTER_CONFIG.proxyUrl && !OPENROUTER_CONFIG.apiKey) {
+                return null;
+            }
+
+            const messages = [
+                {
+                    role: 'system',
+                    content: `你是时秩臻润健康管理中心的中文客服助理。回答要自然、亲切、专业，尽量像真人客服，不要死板套模板。只根据以下资料回答，不确定就引导用户加预约微信 Njszzr001 或到店咨询。价格、预约方式、地址必须准确。回答不要超过180字，适合网页聊天。不要使用诊断或治疗承诺，不要说“保证治好”。\n\n${buildClinicKnowledge()}`
+                },
+                ...chatHistory.slice(-8),
+                { role: 'user', content: message }
+            ];
+
+            const response = await fetch(OPENROUTER_CONFIG.proxyUrl || 'https://openrouter.ai/api/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...(OPENROUTER_CONFIG.apiKey ? { Authorization: `Bearer ${OPENROUTER_CONFIG.apiKey}` } : {}),
+                    'HTTP-Referer': OPENROUTER_CONFIG.siteUrl,
+                    'X-Title': OPENROUTER_CONFIG.siteName
+                },
+                body: JSON.stringify({
+                    model: OPENROUTER_CONFIG.model,
+                    messages,
+                    temperature: 0.55,
+                    max_tokens: 320
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`OpenRouter request failed: ${response.status}`);
+            }
+
+            const data = await response.json();
+            const text = data?.choices?.[0]?.message?.content?.trim();
+            if (!text) {
+                return null;
+            }
+
+            chatHistory.push({ role: 'user', content: message });
+            chatHistory.push({ role: 'assistant', content: text });
+
+            return {
+                text,
+                quickReplies: pickQuickReplies(message, text)
+            };
+        }
+
+        function pickQuickReplies(message, answer) {
+            const text = `${message} ${answer}`.toLowerCase();
+            if (text.includes('预约') || text.includes('微信') || text.includes('地址')) {
+                return ['NIX+价格', '净颜靓白价格', '有哪些项目'];
+            }
+            if (text.includes('美白') || text.includes('净颜')) {
+                return ['美白多久见效', '美白能维持多久', '如何预约'];
+            }
+            if (text.includes('nix') || text.includes('nad')) {
+                return ['NIX+需要体检吗', 'NIX+和美白一起打吗', '如何预约'];
+            }
+            return ['有哪些项目', '如何预约', '安全吗'];
         }
 
         // 显示打字效果
@@ -1809,7 +1936,7 @@
             faqs.forEach((faq, index) => {
                 faqText += `<strong>Q${index + 1}: ${faq.question}</strong><br>A: ${faq.answer}<br><br>`;
             });
-            addMessage(faqText, 'bot');
+            addMessage(faqText, 'bot', [], { allowHtml: true });
         }
 
         // 显示项目列表
@@ -1819,7 +1946,7 @@
                 productText += `💎 <strong>${p.name}</strong><br>💰 单次：${p.price}元 | 疗程：${p.packagePrice}元/${p.sessions}次<br><br>`;
             });
             productText += '想了解哪个项目的详细信息？直接问我吧！';
-            addMessage(productText, 'bot', products.map(p => p.name + '价格'));
+            addMessage(productText, 'bot', products.map(p => p.name + '价格'), { allowHtml: true });
         }
 
         // 渲染管理后台项目列表

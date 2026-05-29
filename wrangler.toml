@@ -1,0 +1,7 @@
+name = "shizhi-zhenrun-openrouter"
+main = "openrouter-worker.js"
+compatibility_date = "2026-05-29"
+workers_dev = true
+
+[secrets]
+required = [ "OPENROUTER_API_KEY" ]
