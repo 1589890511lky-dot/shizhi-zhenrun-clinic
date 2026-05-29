@@ -1452,6 +1452,225 @@
             }
         ];
 
+        const productCatalogKnowledge = [
+            {
+                name: '焕龄Nix+',
+                aliases: ['NIX+', 'nix', 'nad', '焕龄'],
+                series: '焕龄Nix+',
+                effects: '细胞级抗衰、精力管理、睡眠状态、代谢活力、亚健康状态维护',
+                target: '25岁以上、亚健康、长期熬夜作息紊乱、追求深度抗衰保养人群',
+                keywords: ['抗衰', '衰老', '精力差', '熬夜', '亚健康', '睡眠差', '代谢', '细胞', '疲劳', '没精神']
+            },
+            {
+                name: '抗衰needle',
+                aliases: ['抗衰'],
+                series: '黄金时代系列',
+                effects: '年轻化养护、抗氧化、融合美白提亮、肌肤紧致、轮廓与状态管理',
+                target: '25岁以上初老、肤色暗沉、体态臃肿、肌肤敏感泛红、想综合抗衰人群',
+                keywords: ['抗衰', '初老', '皮肤松弛', '暗沉', '敏感', '泛红', '紧致', '年轻化']
+            },
+            {
+                name: '回春needle',
+                aliases: ['回春'],
+                series: '黄金时代系列',
+                effects: '身心焕新、抗疲劳、焕肤亮肤、状态提升',
+                target: '初老松弛、肤色暗沉、体态走样、体内有炎症、想整体提升状态人群',
+                keywords: ['回春', '疲劳', '抗疲劳', '状态差', '暗沉', '炎症', '体态', '恢复']
+            },
+            {
+                name: '速愈needle',
+                aliases: ['速愈'],
+                series: '黄金时代系列',
+                effects: '炎症调控、术后恢复、组织修复、红肿胀痛恢复支持',
+                target: '医美/整形外科术后、术后红肿热痛、创口炎症、组织修复与愈合需求人群',
+                keywords: ['术后', '恢复', '修复', '红肿', '炎症', '创口', '愈合', '消肿', '医美后']
+            },
+            {
+                name: '六维闪白',
+                aliases: ['闪白', '美白', '净颜靓白', '亮白'],
+                series: '代谢焕活系列',
+                effects: '抗氧化、黑色素调控、提亮肤色、改善色沉和肤色不均',
+                target: '肤色暗沉蜡黄、面部色斑、色素沉着、肤质不均、晒斑、抗氧亮白需求人群',
+                keywords: ['美白', '变白', '亮白', '暗沉', '蜡黄', '色斑', '色沉', '晒斑', '肤色不均', '抗氧化']
+            },
+            {
+                name: '大蒜needle',
+                aliases: ['大蒜', '大蒜针'],
+                series: '代谢焕活系列',
+                effects: '免疫防御、抗感染、炎症应激、身体抗疲劳与体能维护',
+                target: '长期熬夜、免疫力偏弱、换季反复敏感、易上火发炎人群',
+                keywords: ['免疫力低', '容易感冒', '换季', '炎症', '上火', '抗感染', '熬夜', '疲劳']
+            },
+            {
+                name: '能量needle',
+                aliases: ['能量'],
+                series: '代谢焕活系列',
+                effects: '能量补充、精力提升、体能恢复、运动或高强度工作后的状态支持',
+                target: '熬夜后体力透支、高强度工作/运动人群、用脑过度导致大脑宕机人群',
+                keywords: ['没精神', '精力差', '体力差', '累', '疲劳', '透支', '运动后', '用脑过度', '白天困']
+            },
+            {
+                name: '稳糖needle',
+                aliases: ['稳糖'],
+                series: '代谢焕活系列',
+                effects: '辅助糖代谢管理、能量平衡、血糖波动与代谢状态调理',
+                target: '血糖偏高、糖代谢紊乱、肥胖高糖高碳饮食、家族遗传血糖问题、中老年糖代谢关注人群',
+                keywords: ['血糖', '糖代谢', '高糖', '肥胖', '代谢', '控糖', '胰岛', '餐后困']
+            },
+            {
+                name: '减脂needle',
+                aliases: ['减脂', '减重', '减肥'],
+                series: '明星肽系列',
+                effects: '脂肪代谢、代谢通路优化、辅助体重和体脂管理',
+                target: '易胖体质、基础代谢慢、减脂瓶颈期、水肿型肥胖、饮食作息不规律人群',
+                keywords: ['减肥', '减脂', '减重', '胖', '体脂', '水肿', '代谢慢', '瘦身', '体重']
+            },
+            {
+                name: '醒酒护肝',
+                aliases: ['醒酒护肝', '护肝'],
+                series: '护肝代谢',
+                effects: '酒精代谢支持、肝细胞保护、饮酒后反应与肝功能指标关注',
+                target: '长期应酬频繁饮酒、酒后头痛乏力反胃、肝功能偏高、酒精代谢差人群',
+                keywords: ['喝酒', '饮酒', '应酬', '酒局', '醉酒', '宿醉', '酒后', '肝功能', '护肝', '转氨酶']
+            },
+            {
+                name: '抗炎净基',
+                aliases: ['抗炎净基', '抗炎'],
+                series: '免疫守护',
+                effects: '炎症因子调控、免疫应答调节、身体慢性炎症状态管理',
+                target: '长期作息紊乱、慢性炎症反复、氧化毒素堆积、慢性咽炎、肠胃炎、身体易发炎人群',
+                keywords: ['炎症', '慢性炎症', '咽炎', '肠胃炎', '反复发炎', '免疫', '氧化', '身体发炎']
+            },
+            {
+                name: '净颜靓白',
+                aliases: ['净颜靓白', '靓白'],
+                series: '黄金时代系列',
+                effects: '肤色提亮、色沉淡化、抗氧化、皮肤透亮度管理',
+                target: '皮肤暗沉无光、色素沉着、干燥粗糙、胶原流失、肤质失衡人群',
+                keywords: ['美白', '暗沉', '色沉', '皮肤黄', '干燥', '粗糙', '胶原', '肤质']
+            },
+            {
+                name: '肝胆清零',
+                aliases: ['肝胆清零'],
+                series: '护肝代谢',
+                effects: '肝胆排毒、胆汁代谢、肝胆湿热和油腻饮食后的代谢支持',
+                target: '经常熬夜劳累、肝损伤亚健康、口苦口臭、面色萎黄暗沉、体内毒素堆积、肝胆代谢不畅人群',
+                keywords: ['肝胆', '口苦', '口臭', '熬夜', '肝损伤', '面色黄', '排毒', '油腻', '胆汁']
+            },
+            {
+                name: '消肿养肾',
+                aliases: ['消肿养肾', '养肾'],
+                series: '水肿代谢',
+                effects: '水肿管理、肾脏代谢支持、身体浮肿和湿重状态调理',
+                target: '全身易水肿、体内湿气过重、肾脏代谢偏弱、小便不畅、久坐下肢肿胀人群',
+                keywords: ['水肿', '浮肿', '湿气', '肾', '小便不畅', '下肢肿', '久坐', '肿胀']
+            },
+            {
+                name: '胃肠needle',
+                aliases: ['胃肠', '肠胃'],
+                series: '胃肠养护',
+                effects: '胃肠黏膜修复、消化吸收、胃部不适和肠胃功能调理',
+                target: '慢性胃炎、胃溃疡、十二指肠溃疡、肠胃黏膜受损、肠道菌群失衡、消化不良、反酸胃痛腹胀、饮食不规律人群',
+                keywords: ['胃痛', '胃炎', '胃溃疡', '反酸', '腹胀', '消化不良', '肠胃', '胃不舒服', '饮食不规律']
+            },
+            {
+                name: '排毒needle',
+                aliases: ['排毒'],
+                series: '排毒代谢',
+                effects: '毒素代谢、肝肾代谢支持、代谢废物清理与身体负担管理',
+                target: '长期饮食油腻、肝肾代谢负担重、血脂偏高、内湿气毒素堆积、面色暗沉人群',
+                keywords: ['排毒', '油腻', '血脂', '毒素', '代谢负担', '湿气', '暗沉', '肝肾']
+            },
+            {
+                name: '安睡无忧',
+                aliases: ['安睡', '睡眠'],
+                series: '生命活力系列',
+                effects: '睡眠状态调理、神经系统支持、入睡困难和多梦早醒的咨询方向',
+                target: '焦虑抑郁、入睡难、多梦、早醒、长期精神紧绷导致睡眠障碍人群',
+                keywords: ['失眠', '睡不着', '睡不好', '入睡困难', '多梦', '早醒', '焦虑', '睡眠浅']
+            },
+            {
+                name: '气血needle',
+                aliases: ['气血'],
+                series: '生命活力系列',
+                effects: '气血与能量代谢支持、面色和体力状态调理',
+                target: '气血两虚、面色蜡黄苍白、手脚常年冰凉、气虚气喘乏力、女性经期紊乱、宫寒体虚人群',
+                keywords: ['气血', '面色苍白', '手脚冰凉', '乏力', '宫寒', '经期紊乱', '体虚', '气喘']
+            },
+            {
+                name: '心脉通畅',
+                aliases: ['心脉', '心脉通畅'],
+                series: '生命活力系列',
+                effects: '心肌保护、血管状态支持、心血管养护咨询方向',
+                target: '血压血脂偏高、心肌功能偏弱、血管循环不畅、胸闷气短、久坐缺乏运动人群',
+                keywords: ['血压', '血脂', '心脏', '心血管', '胸闷', '气短', '循环差', '久坐']
+            },
+            {
+                name: '脑力needle',
+                aliases: ['脑力'],
+                series: '生命活力系列',
+                effects: '脑部能量调节、专注力记忆力支持、用脑效率和精神状态管理',
+                target: '高强度用脑、记忆力衰退、专注力不足、脑雾头晕、压力性脱发、思维迟钝、精神内耗人群',
+                keywords: ['脑雾', '记忆力', '专注力', '头晕', '用脑', '思维慢', '精神内耗', '压力大']
+            },
+            {
+                name: '骨力新生',
+                aliases: ['骨力', '骨力新生'],
+                series: '骨骼关节',
+                effects: '骨代谢调节、软骨修复、骨密度和关节状态管理',
+                target: '中老年骨量流失、关节僵硬隐痛、软骨磨损、运动损伤、术后骨骼修复、骨质疏松、久坐关节退化人群',
+                keywords: ['关节', '骨密度', '骨质疏松', '软骨', '运动损伤', '关节痛', '骨量', '僵硬']
+            },
+            {
+                name: '甲稳needle',
+                aliases: ['甲稳', '甲状腺'],
+                series: '甲状腺调理',
+                effects: '甲状腺营养与代谢状态调理、情绪和代谢波动咨询方向',
+                target: '甲状腺功能波动、甲功异常、桥本亚健康、甲状腺术后修复、代谢紊乱、情绪易疲惫、甲状腺营养缺乏人群',
+                keywords: ['甲状腺', '甲功', '桥本', '甲亢', '甲减', '脖子', '代谢紊乱', '情绪疲惫']
+            },
+            {
+                name: '斗志昂扬',
+                aliases: ['斗志', '斗志昂扬'],
+                series: '男性活力',
+                effects: '男性内分泌与生殖机能优化、精力和活力状态管理',
+                target: '精力下滑、内分泌失调、体能衰退、亚健康体虚、备孕男性、精子质量管理人群',
+                keywords: ['男性', '精力下滑', '备孕', '精子', '体能衰退', '雄性', '内分泌', '男性活力']
+            },
+            {
+                name: '春潮私护',
+                aliases: ['春潮', '私护'],
+                series: '女性私护',
+                effects: '卵巢功能养护、卵子质量与女性生殖系统养护咨询方向',
+                target: '25岁以上女性、卵巢保养、经前综合征、卵巢功能衰退、卵子质量不佳、内分泌失衡人群',
+                keywords: ['卵巢', '经前', '女性', '私护', '内分泌', '备孕', '卵子', '月经']
+            },
+            {
+                name: '荷尔蒙之春',
+                aliases: ['荷尔蒙'],
+                series: '荷尔蒙调理',
+                effects: '性激素与生殖轴调节、性欲减退和内分泌失调咨询方向',
+                target: '成年男女激素紊乱、性欲减退、性功能下降、内分泌失调、备孕调理、更年期/绝经期人群',
+                keywords: ['荷尔蒙', '激素', '性欲', '性功能', '更年期', '绝经', '内分泌', '备孕']
+            },
+            {
+                name: '甲基化needle',
+                aliases: ['甲基化'],
+                series: '代谢抗衰',
+                effects: '甲基化通路激活、慢性炎症与免疫力、亚健康和老化状态管理',
+                target: '早衰显老、慢性炎症久治反复、免疫力低下、亚健康、代谢迟缓、体质偏弱易疲劳人群',
+                keywords: ['甲基化', '早衰', '免疫低', '慢性炎症', '代谢迟缓', '疲劳', '显老', '体质弱']
+            },
+            {
+                name: '慢病管理',
+                aliases: ['慢病'],
+                series: '慢病管理',
+                effects: '慢病人群健康管理咨询、血糖血压血脂和循环代谢方向评估',
+                target: '高血压、糖尿病、血脂异常、代谢综合征及需要长期慢病养护人群',
+                keywords: ['高血压', '糖尿病', '血脂异常', '慢病', '代谢综合征', '血压', '血糖', '循环']
+            }
+        ];
+
         // 保存项目数据到本地存储
         function saveProducts() {
             localStorage.setItem('clinicProducts', JSON.stringify(products));
@@ -1547,6 +1766,9 @@
 
             const faqLines = faqs.map(faq => `Q：${faq.question}\nA：${faq.answer}`);
             const consultationLines = consultationProjects.map(project => `${project.name}：${project.purpose}`);
+            const catalogLines = productCatalogKnowledge.map(product => {
+                return `${product.name}（${product.series}）：${product.effects}。适用人群：${product.target}。相关关键词：${product.keywords.join('、')}`;
+            });
 
             return [
                 '诊所：时秩臻润健康管理中心，南京市建邺区，河西德基附近，专科点滴诊所。',
@@ -1555,6 +1777,8 @@
                 '重要边界：不要诊断疾病，不承诺治疗效果，不替代医生面诊。涉及禁忌、孕期、哺乳期、肿瘤、癫痫、严重慢病、药物过敏或身体不适时，建议先咨询医生/院长并做体检。',
                 '咨询/检查类占位项目（后续可替换为正式项目名）：',
                 ...consultationLines,
+                '产品册项目知识库（用户说相同或语义相似关键词时，可推荐对应项目；推荐前需说明需医生结合体检确认）：',
+                ...catalogLines,
                 '产品资料：',
                 ...productLines,
                 '常见问答：',
@@ -1576,6 +1800,8 @@
 - 用户说“失眠、睡不好、入睡困难、睡眠浅、早醒”，重点关注睡眠质量评估、基础体检、营养代谢评估和医生面诊。
 - 用户说“很累、疲劳、乏力、精力差、没精神、白天困、恢复慢”，重点关注基础体检、营养代谢评估、睡眠质量评估、免疫力调理咨询和医生面诊。
 - 用户表达的是身体状态或生活习惯时，不要回复“没有理解”，也不要只机械介绍产品目录；先推荐咨询/检查方向，再由医生判断是否适合具体调理项目。
+- 用户提到产品册相关症状、需求或语义相似词时，从“产品册项目知识库”中挑选最匹配的 1-3 个项目推荐。例如喝酒/应酬优先醒酒护肝、肝胆清零、肝功能检查；失眠优先安睡无忧、睡眠质量评估；精力差/疲劳优先能量needle、焕龄Nix+、营养代谢评估；胃痛反酸优先胃肠needle；甲状腺/甲功优先甲稳needle；更年期/激素优先荷尔蒙之春。
+- 推荐项目时要解释“为什么适合了解这个方向”，但不要说一定能解决或治疗。
 
 合规要求：
 - 不要直接诊断疾病，不要说用户一定患有某病。
@@ -1670,6 +1896,61 @@ ${buildClinicKnowledge()}`;
             return lifestyleKeywords.some(keyword => lowerMsg.includes(keyword));
         }
 
+        function findCatalogRecommendations(message, limit = 3) {
+            const lowerMsg = message.toLowerCase();
+            const scored = productCatalogKnowledge.map(product => {
+                let score = 0;
+                for (const alias of product.aliases) {
+                    if (lowerMsg.includes(alias.toLowerCase())) score += 4;
+                }
+                for (const keyword of product.keywords) {
+                    if (lowerMsg.includes(keyword.toLowerCase())) score += 2;
+                }
+                for (const term of product.target.split(/[、，,。]/)) {
+                    const normalized = term.trim().toLowerCase();
+                    if (normalized && normalized.length >= 2 && lowerMsg.includes(normalized)) score += 1;
+                }
+                if (lowerMsg.includes('喝酒') || lowerMsg.includes('饮酒') || lowerMsg.includes('应酬') || lowerMsg.includes('酒局') || lowerMsg.includes('宿醉')) {
+                    if (['醒酒护肝', '肝胆清零', '排毒needle'].includes(product.name)) score += 5;
+                }
+                if (lowerMsg.includes('失眠') || lowerMsg.includes('睡不好') || lowerMsg.includes('睡不着') || lowerMsg.includes('入睡困难') || lowerMsg.includes('早醒') || lowerMsg.includes('多梦')) {
+                    if (['安睡无忧', '焕龄Nix+', '营养代谢评估'].includes(product.name)) score += 5;
+                }
+                if (lowerMsg.includes('精力差') || lowerMsg.includes('没精神') || lowerMsg.includes('疲劳') || lowerMsg.includes('很累') || lowerMsg.includes('白天困') || lowerMsg.includes('乏力')) {
+                    if (['能量needle', '焕龄Nix+', '甲基化needle'].includes(product.name)) score += 5;
+                }
+                if (lowerMsg.includes('胃') || lowerMsg.includes('反酸') || lowerMsg.includes('腹胀') || lowerMsg.includes('消化')) {
+                    if (product.name === '胃肠needle') score += 5;
+                }
+                if (lowerMsg.includes('甲状腺') || lowerMsg.includes('甲功') || lowerMsg.includes('桥本')) {
+                    if (product.name === '甲稳needle') score += 5;
+                }
+                if (lowerMsg.includes('更年期') || lowerMsg.includes('激素') || lowerMsg.includes('荷尔蒙') || lowerMsg.includes('内分泌')) {
+                    if (['荷尔蒙之春', '春潮私护', '甲稳needle'].includes(product.name)) score += 4;
+                }
+                return { product, score };
+            }).filter(item => item.score > 0);
+
+            return scored
+                .sort((a, b) => b.score - a.score)
+                .slice(0, limit)
+                .map(item => item.product);
+        }
+
+        function buildCatalogRecommendationReply(message) {
+            const recommendations = findCatalogRecommendations(message);
+            if (recommendations.length === 0) return null;
+
+            const lines = recommendations.map(product => {
+                return `• <strong>${product.name}</strong>：${product.effects}`;
+            }).join('<br>');
+
+            return {
+                text: `您这个情况可以先了解这几个方向：<br>${lines}<br><br>具体是否适合打对应项目，需要医生结合您的体检数据、既往史和当前身体状态进一步确认。也建议先做基础体检/相关专项检查，再定方案。预约微信：<strong>Njszzr001</strong>`,
+                quickReplies: ['如何预约', '基础体检怎么做', '医生面诊咨询', recommendations[0].name]
+            };
+        }
+
         // 显示打字效果
         function showTyping() {
             const chatMessages = document.getElementById('chatMessages');
@@ -1700,6 +1981,11 @@ ${buildClinicKnowledge()}`;
             // 生活习惯/亚健康咨询兜底优先：AI 不可用时也像诊所客服顾问一样理解问题
             if (isLifestyleConsultation(lowerMsg)) {
                 return buildLifestyleConsultationReply(lowerMsg);
+            }
+
+            const catalogReply = buildCatalogRecommendationReply(lowerMsg);
+            if (catalogReply) {
+                return catalogReply;
             }
             
             // 产品关键词别名映射（关键词 -> 产品名）
@@ -1965,10 +2251,14 @@ ${buildClinicKnowledge()}`;
             const uniqueProjects = [...new Set(projects)];
             const concernText = [...new Set(concerns)].join('、');
             const projectText = uniqueProjects.map(project => `• ${project}`).join('<br>');
+            const catalogRecommendations = findCatalogRecommendations(lowerMsg);
+            const productText = catalogRecommendations.length > 0
+                ? `<br><br>产品册里也可以重点了解：<br>${catalogRecommendations.map(product => `• <strong>${product.name}</strong>：${product.effects}`).join('<br>')}`
+                : '';
 
             return {
-                text: `辛苦啦，您描述的情况更像是需要先做<strong>亚健康状态评估</strong>，可以重点关注${concernText}。<br><br>建议先预约这些方向：<br>${projectText}<br><br>我们不能直接在线判断具体问题，最好由医生结合体检数据、作息饮食和既往情况确认是否适合后续调理项目。预约微信：<strong>Njszzr001</strong>`,
-                quickReplies: ['如何预约', '基础体检怎么做', '肝功能检查', '睡眠质量评估']
+                text: `辛苦啦，您描述的情况更像是需要先做<strong>亚健康状态评估</strong>，可以重点关注${concernText}。<br><br>建议先预约这些方向：<br>${projectText}${productText}<br><br>我们不能直接在线判断具体问题，最好由医生结合体检数据、作息饮食和既往情况确认是否适合后续调理项目。预约微信：<strong>Njszzr001</strong>`,
+                quickReplies: ['如何预约', '基础体检怎么做', catalogRecommendations[0]?.name || '医生面诊咨询', '睡眠质量评估']
             };
         }
 
