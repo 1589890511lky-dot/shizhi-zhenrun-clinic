@@ -60,7 +60,7 @@ export default {
             ...clientMessages.filter(message => message && message.role && typeof message.content === 'string')
         ];
 
-        const requestedModel = payload.model || env.OPENROUTER_MODEL || 'openrouter/auto';
+        const requestedModel = payload.model || env.OPENROUTER_MODEL || 'deepseek/deepseek-chat-v3.1';
         const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
             method: 'POST',
             headers: {
